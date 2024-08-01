@@ -5,16 +5,19 @@ import (
 )
 
 func main() {
-	machine, err := vm.New(64)
-	if err != nil {
-		panic(err)
-	}
+	machine := vm.New()
 
-	machine.Memory[0] = uint8(vm.JMP)
-	machine.Memory[1] = uint8(vm.MOV)
-	machine.Memory[2] = uint8(vm.CMP)
-	machine.Memory[3] = uint8(vm.NOP)
-	machine.Memory[4] = uint8(vm.HLT)
+	machine.Memory[0] = uint8(vm.LOD)
+	machine.Memory[1] = uint8(vm.RA)
+	machine.Memory[2] = uint8(69)
+	machine.Memory[3] = uint8(0)
+	machine.Memory[4] = uint8(vm.MOV)
+	machine.Memory[5] = uint8(vm.RB)
+	machine.Memory[6] = uint8(vm.RA)
+	machine.Memory[7] = uint8(vm.HLT)
+
+	machine.Memory[69] = uint8(42)
+	machine.Memory[70] = uint8(0)
 
 	for machine.Step() {
 
