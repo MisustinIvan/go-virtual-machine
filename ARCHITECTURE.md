@@ -26,7 +26,7 @@
  - [ ] `dec`: reg0(uint8) - decrement value in reg0
  - [x] `lod`: reg0(uint8) addr0(uint16) - load value from addr0 into reg0
  - [x] `str`: addr0(uint16) reg0(uint8) - store value from reg0 into addr0
- - [ ] `prt`: reg0(uint8) - print reg0
+ - [x] `prt`: reg0(uint8) - print reg0
  - [x] `hlt`: halt
  - [ ] `cmp`: reg0(uint8) reg1(uint8) - compare values in reg0 and reg1, result is stored in rs
  - [ ] `jif`: addr0(uint16) - jump if overflow

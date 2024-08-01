@@ -150,6 +150,13 @@ func (v *VM) Step() bool {
 			v.str(v.readu16(v.pc+2), v.regs[v.Memory[v.pc+1]])
 		}
 
+	case PRT:
+		if v.pc+2 >= MEMSIZE {
+			return false
+		} else {
+			v.prt(v.regs[v.Memory[v.pc+1]])
+		}
+
 	case HLT:
 		fmt.Printf("0x%x:HLT\n", v.pc)
 		return false

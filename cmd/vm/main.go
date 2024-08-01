@@ -14,7 +14,11 @@ func main() {
 	machine.Memory[4] = uint8(vm.MOV)
 	machine.Memory[5] = uint8(vm.RB)
 	machine.Memory[6] = uint8(vm.RA)
-	machine.Memory[7] = uint8(vm.HLT)
+	machine.Memory[7] = uint8(vm.PRT)
+	machine.Memory[8] = uint8(vm.RA)
+	machine.Memory[9] = uint8(vm.PRT)
+	machine.Memory[10] = uint8(vm.RB)
+	machine.Memory[11] = uint8(vm.HLT)
 
 	machine.Memory[69] = uint8(42)
 	machine.Memory[70] = uint8(0)
