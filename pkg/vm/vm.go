@@ -147,7 +147,7 @@ func (v *VM) Step() bool {
 		if v.pc+4 >= MEMSIZE {
 			return false
 		} else {
-			v.str(v.readu16(v.pc+2), v.regs[v.Memory[v.pc+1]])
+			v.str(v.readu16(v.pc+1), v.regs[v.Memory[v.pc+3]])
 		}
 
 	case PRT:
@@ -155,6 +155,20 @@ func (v *VM) Step() bool {
 			return false
 		} else {
 			v.prt(v.regs[v.Memory[v.pc+1]])
+		}
+
+	case INC:
+		if v.pc+2 >= MEMSIZE {
+			return false
+		} else {
+			v.inc(&v.regs[v.Memory[v.pc+1]])
+		}
+
+	case DEC:
+		if v.pc+2 >= MEMSIZE {
+			return false
+		} else {
+			v.dec(&v.regs[v.Memory[v.pc+1]])
 		}
 
 	case HLT:

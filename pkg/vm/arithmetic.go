@@ -41,3 +41,15 @@ func (v *VM) div(r0 *register, r1 *register) {
 	}
 	v.pc += 3
 }
+
+func (v *VM) inc(r0 *register) {
+	fmt.Printf("0x%x:INC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+	r0.val += 1
+	v.pc += 2
+}
+
+func (v *VM) dec(r0 *register) {
+	fmt.Printf("0x%x:DEC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+	r0.val += 1
+	v.pc += 2
+}
