@@ -14,4 +14,13 @@ var handler map[opcode]operation = map[opcode]operation{
 	NOP: nop_op{},
 	PRT: prt_op{},
 	JMP: jmp_op{},
+	JIF: jif_op{},
+	JID: jid_op{},
+	JIZ: jiz_op{},
+	JIE: jie_op{},
+	JNE: jne_op{},
+	JIG: jig_op{},
+	JIS: jis_op{},
+	JEG: jeg_op{},
+	JES: jes_op{},
 }

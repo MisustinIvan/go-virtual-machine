@@ -17,6 +17,8 @@ const (
 	PRT
 	HLT
 	CMP
+	JIF
+	JID
 	JIZ
 	JIE
 	JNE
