@@ -15,6 +15,7 @@
  - `rs`: special register used as result of operations (cmp), overflow or division by zero. not directly accessible
 
 ## instructions
+ - if an instruction was to generate an error(divzero, overflow), the operation is left to proceed and the program is informed via the special register. in case of division by zero, the result is zero
  - [x] `nop`: no operation
  - [x] `add`: reg0(uint8) reg1(uint8) - add reg0 and reg1 to reg0
  - [x] `sub`: reg0(uint8) reg1(uint8) - subtract reg1 from reg0 to reg0
