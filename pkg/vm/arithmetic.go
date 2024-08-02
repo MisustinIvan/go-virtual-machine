@@ -2,35 +2,88 @@ package vm
 
 import "fmt"
 
-func (v *VM) add(r0 *register, r1 *register) {
+type add_op struct{}
+
+func (o add_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var r0 *register = &v.regs[v.Memory[v.pc+1]]
+	var r1 *register = &v.regs[v.Memory[v.pc+2]]
+
 	fmt.Printf("0x%x:ADD %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+
 	v.regs[v.Memory[v.pc+1]].val = r0.val + r1.val
+
 	if int(r0.val)+int(r1.val) >= MEMSIZE {
 		v.regs[SP].val = uint16(OVERFLOW)
 	}
-	v.pc += 3
+	v.pc += uint16(o.size())
+	return true
 }
 
-func (v *VM) sub(r0 *register, r1 *register) {
+func (o add_op) size() uint8 {
+	return 3
+}
+
+type sub_op struct{}
+
+func (o sub_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var r0 *register = &v.regs[v.Memory[v.pc+1]]
+	var r1 *register = &v.regs[v.Memory[v.pc+2]]
+
 	fmt.Printf("0x%x:SUB %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	v.regs[v.Memory[v.pc+1]].val = r0.val - r1.val
 	if int(r0.val)-int(r1.val) < 0 {
 		v.regs[SP].val = uint16(OVERFLOW)
 	}
-	v.pc += 3
+	v.pc += uint16(o.size())
+	return true
 }
 
-func (v *VM) mul(r0 *register, r1 *register) {
+func (o sub_op) size() uint8 {
+	return 3
+}
+
+type mul_op struct{}
+
+func (o mul_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var r0 *register = &v.regs[v.Memory[v.pc+1]]
+	var r1 *register = &v.regs[v.Memory[v.pc+2]]
+
 	fmt.Printf("0x%x:MUL %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	fmt.Println(r0.val * r1.val)
 	v.regs[v.Memory[v.pc+1]].val = r0.val * r1.val
 	if int(r0.val)*int(r1.val) >= MEMSIZE {
 		v.regs[SP].val = uint16(OVERFLOW)
 	}
-	v.pc += 3
+	v.pc += uint16(o.size())
+	return true
 }
 
-func (v *VM) div(r0 *register, r1 *register) {
+func (o mul_op) size() uint8 {
+	return 3
+}
+
+type div_op struct{}
+
+func (o div_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var r0 *register = &v.regs[v.Memory[v.pc+1]]
+	var r1 *register = &v.regs[v.Memory[v.pc+2]]
+
 	fmt.Printf("0x%x:DIV %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	if r1.val == 0 {
 		fmt.Println("division by zero")
@@ -39,17 +92,48 @@ func (v *VM) div(r0 *register, r1 *register) {
 		fmt.Println(r0.val / r1.val)
 		v.regs[v.Memory[v.pc+1]].val = r0.val / r1.val
 	}
-	v.pc += 3
+	v.pc += uint16(o.size())
+	return true
 }
 
-func (v *VM) inc(r0 *register) {
+func (o div_op) size() uint8 {
+	return 3
+}
+
+type inc_op struct{}
+
+func (o inc_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var r0 *register = &v.regs[v.Memory[v.pc+1]]
+
 	fmt.Printf("0x%x:INC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
 	r0.val += 1
-	v.pc += 2
+	v.pc += uint16(o.size())
+	return true
 }
 
-func (v *VM) dec(r0 *register) {
+func (o inc_op) size() uint8 {
+	return 2
+}
+
+type dec_op struct{}
+
+func (o dec_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var r0 *register = &v.regs[v.Memory[v.pc+1]]
+
 	fmt.Printf("0x%x:DEC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
 	r0.val += 1
-	v.pc += 2
+	v.pc += uint16(o.size())
+	return true
+}
+
+func (o dec_op) size() uint8 {
+	return 2
 }

@@ -35,8 +35,11 @@ func main() {
 	machine.Memory[15] = uint8(vm.PRT)
 	machine.Memory[16] = uint8(vm.RB)
 
+	machine.Memory[17] = uint8(vm.JMP)
+	machine.Memory[18] = uint8(7)
+	machine.Memory[19] = uint8(0)
 	// HLT
-	machine.Memory[17] = uint8(vm.HLT)
+	machine.Memory[20] = uint8(vm.HLT)
 
 	// constant data
 	machine.Memory[69] = uint8(42)

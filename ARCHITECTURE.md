@@ -21,9 +21,9 @@
  - [x] `mul`: reg0(uint8) reg1(uint8) - multiply reg0 with reg1 to reg0
  - [x] `div`: reg0(uint8) reg1(uint8) - divide reg0 by reg1 to reg0
  - [x] `mov`: reg0(uint8) reg1(uint8) - move reg1 to reg0
- - [ ] `jmp`: addr0(uint16) - jump to a constant addr0
- - [ ] `inc`: reg0(uint8) - increment value in reg0
- - [ ] `dec`: reg0(uint8) - decrement value in reg0
+ - [x] `jmp`: addr0(uint16) - jump to a constant addr0
+ - [x] `inc`: reg0(uint8) - increment value in reg0
+ - [x] `dec`: reg0(uint8) - decrement value in reg0
  - [x] `lod`: reg0(uint8) addr0(uint16) - load value from addr0 into reg0
  - [x] `str`: addr0(uint16) reg0(uint8) - store value from reg0 into addr0
  - [x] `prt`: reg0(uint8) - print reg0

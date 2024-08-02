@@ -4,61 +4,14 @@ import (
 	"fmt"
 )
 
-// one less than 65536
-const MEMSIZE = 65535
-const NREGS = 8
-
-type register struct {
-	val  uint16
-	kind reg
-}
+// 64 kib
+const MEMSIZE = 65536
 
 type VM struct {
 	Memory [MEMSIZE]uint8
 	pc     uint16
 	regs   [NREGS]register
 }
-
-type reg uint8
-
-const (
-	PC reg = iota
-	BP
-	SP
-	RA
-	RB
-	RC
-	RD
-	RS
-)
-
-type instruction uint8
-
-const (
-	NOP instruction = iota
-	ADD
-	SUB
-	MUL
-	DIV
-	MOV
-	JMP
-	INC
-	DEC
-	LOD
-	STR
-	PRT
-	HLT
-	CMP
-	JIO
-	JIZ
-	JIE
-	JNE
-	JIG
-	JIS
-	JEG
-	JES
-	XOR
-)
 
 type sp_code uint16
 
@@ -91,93 +44,17 @@ func New() VM {
 }
 
 func (v *VM) Step() bool {
-	if v.pc >= MEMSIZE {
+	if v.pc >= MEMSIZE-1 {
 		return false
 	}
 
-	var ci instruction = instruction(v.Memory[v.pc])
-	switch ci {
-	case NOP:
-		fmt.Printf("0x%x:NOP\n", v.pc)
-		v.pc += 1
+	var ci opcode = opcode(v.Memory[v.pc])
 
-	case ADD:
-		if v.pc+3 >= MEMSIZE {
-			return false
-		} else {
-			v.add(&v.regs[v.Memory[v.pc+1]], &v.regs[v.Memory[v.pc+2]])
-		}
-
-	case SUB:
-		if v.pc+3 >= MEMSIZE {
-			return false
-		} else {
-			v.sub(&v.regs[v.Memory[v.pc+1]], &v.regs[v.Memory[v.pc+2]])
-		}
-
-	case MUL:
-		if v.pc+3 >= MEMSIZE {
-			return false
-		} else {
-			v.mul(&v.regs[v.Memory[v.pc+1]], &v.regs[v.Memory[v.pc+2]])
-		}
-
-	case DIV:
-		if v.pc+3 >= MEMSIZE {
-			return false
-		} else {
-			v.div(&v.regs[v.Memory[v.pc+1]], &v.regs[v.Memory[v.pc+2]])
-		}
-
-	case MOV:
-		if v.pc+3 >= MEMSIZE {
-			return false
-		} else {
-			v.mov(&v.regs[v.Memory[v.pc+1]], &v.regs[v.Memory[v.pc+2]])
-		}
-
-	case LOD:
-		if v.pc+4 >= MEMSIZE {
-			return false
-		} else {
-			v.lod(&v.regs[v.Memory[v.pc+1]], v.readu16(v.pc+2))
-		}
-
-	case STR:
-		if v.pc+4 >= MEMSIZE {
-			return false
-		} else {
-			v.str(v.readu16(v.pc+1), v.regs[v.Memory[v.pc+3]])
-		}
-
-	case PRT:
-		if v.pc+2 >= MEMSIZE {
-			return false
-		} else {
-			v.prt(v.regs[v.Memory[v.pc+1]])
-		}
-
-	case INC:
-		if v.pc+2 >= MEMSIZE {
-			return false
-		} else {
-			v.inc(&v.regs[v.Memory[v.pc+1]])
-		}
-
-	case DEC:
-		if v.pc+2 >= MEMSIZE {
-			return false
-		} else {
-			v.dec(&v.regs[v.Memory[v.pc+1]])
-		}
-
-	case HLT:
-		fmt.Printf("0x%x:HLT\n", v.pc)
-		return false
-
-	default:
-		fmt.Printf("Unknown instruction 0x%x at 0x%x, halting\n", ci, v.pc)
+	handle, ok := handler[ci]
+	if ok {
+		return handle.do(v)
+	} else {
+		fmt.Printf("unregistered opcode %d\n", ci)
 		return false
 	}
-	return true
 }

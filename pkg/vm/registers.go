@@ -1,5 +1,25 @@
 package vm
 
+const NREGS = 8
+
+type register struct {
+	val  uint16
+	kind reg
+}
+
+type reg uint8
+
+const (
+	PC reg = iota
+	BP
+	SP
+	RA
+	RB
+	RC
+	RD
+	RS
+)
+
 func regtostring(r reg) string {
 	switch r {
 	case PC:
