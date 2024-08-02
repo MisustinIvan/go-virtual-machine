@@ -9,15 +9,19 @@ func (o cmp_op) do(v *VM) bool {
 		return false
 	}
 
-	var a = v.regs[v.Memory[v.pc+1]].val
-	var b = v.regs[v.Memory[v.pc+1]].val
+	var r0 = v.regs[v.Memory[v.pc+1]]
+	var r1 = v.regs[v.Memory[v.pc+1]]
 
-	if a == b {
+	if r0.val == r1.val {
 		v.regs[SP].val = uint16(EQUALS)
-	} else if a < b {
+	} else if r0.val < r1.val {
 		v.regs[SP].val = uint16(SMALLER)
 	} else {
 		v.regs[SP].val = uint16(GREATER)
+	}
+
+	if v.print_bs {
+		fmt.Printf("0x%x:CMP %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	}
 
 	v.pc += uint16(o.size())
@@ -45,7 +49,9 @@ func (o jif_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -73,7 +79,9 @@ func (o jid_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -101,7 +109,9 @@ func (o jiz_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -129,7 +139,9 @@ func (o jie_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -157,7 +169,9 @@ func (o jne_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -185,7 +199,9 @@ func (o jig_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -213,7 +229,9 @@ func (o jis_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -241,7 +259,9 @@ func (o jeg_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -269,7 +289,9 @@ func (o jes_op) do(v *VM) bool {
 		return true
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -297,7 +319,9 @@ func (o jmp_op) do(v *VM) bool {
 		return false
 	}
 
-	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	if v.print_bs {
+		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+	}
 
 	v.pc = address
 
@@ -315,7 +339,9 @@ func (o nop_op) do(v *VM) bool {
 		return false
 	}
 
-	fmt.Printf("0x%x:NOP\n", v.pc)
+	if v.print_bs {
+		fmt.Printf("0x%x:NOP\n", v.pc)
+	}
 
 	v.pc += uint16(o.size())
 	return true
@@ -332,7 +358,9 @@ func (o hlt_op) do(v *VM) bool {
 		return false
 	}
 
-	fmt.Printf("0x%x:HLT\n", v.pc)
+	if v.print_bs {
+		fmt.Printf("0x%x:HLT\n", v.pc)
+	}
 
 	v.pc += uint16(o.size())
 	return false

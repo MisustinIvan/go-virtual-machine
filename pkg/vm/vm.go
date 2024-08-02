@@ -8,12 +8,13 @@ import (
 const MEMSIZE = 65536
 
 type VM struct {
-	Memory [MEMSIZE]uint8
-	pc     uint16
-	regs   [NREGS]register
+	Memory   [MEMSIZE]uint8
+	pc       uint16
+	regs     [NREGS]register
+	print_bs bool
 }
 
-func New() VM {
+func New(bs bool) VM {
 	regs := [NREGS]register{}
 
 	for i := 0; i < NREGS; i++ {
@@ -22,9 +23,10 @@ func New() VM {
 	}
 
 	return VM{
-		Memory: [MEMSIZE]uint8{},
-		pc:     0,
-		regs:   regs,
+		Memory:   [MEMSIZE]uint8{},
+		pc:       0,
+		regs:     regs,
+		print_bs: bs,
 	}
 }
 

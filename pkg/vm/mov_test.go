@@ -7,7 +7,7 @@ import (
 )
 
 func TestMov(t *testing.T) {
-	machine := vm.New()
+	machine := vm.New(false)
 
 	var val uint16 = 16
 
@@ -31,7 +31,7 @@ func TestLod(t *testing.T) {
 	var number uint16
 
 	for i := 0; i < 20; i++ {
-		machine := vm.New()
+		machine := vm.New(false)
 		address = uint16(rand.Int31())
 		number = uint16(rand.Int31())
 
@@ -73,7 +73,7 @@ func TestLod8(t *testing.T) {
 	var number uint8
 
 	for i := 0; i < 20; i++ {
-		machine := vm.New()
+		machine := vm.New(false)
 		address = uint16(rand.Int31())
 		number = uint8(rand.Int31())
 
@@ -112,7 +112,7 @@ func TestStr(t *testing.T) {
 		number = uint16(rand.Int())
 		address = uint16(rand.Int())
 
-		machine := vm.New()
+		machine := vm.New(false)
 
 		if address <= 3 || address >= vm.MEMSIZE-2 {
 			continue
@@ -155,7 +155,7 @@ func TestStr8(t *testing.T) {
 			continue
 		}
 
-		machine := vm.New()
+		machine := vm.New(false)
 
 		machine.SetReg(vm.RA, uint16(number))
 

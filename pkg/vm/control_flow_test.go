@@ -6,7 +6,7 @@ import (
 )
 
 func TestJmp(t *testing.T) {
-	machine := vm.New()
+	machine := vm.New(false)
 
 	var val uint16 = 6942
 
@@ -26,7 +26,7 @@ func TestJmp(t *testing.T) {
 }
 
 func TestEndJmp(t *testing.T) {
-	machine := vm.New()
+	machine := vm.New(false)
 
 	machine.Memory[0] = uint8(vm.JMP)
 	machine.Memory[1] = 0xff
@@ -45,7 +45,7 @@ func TestEndJmp(t *testing.T) {
 }
 
 func TestPcJmp(t *testing.T) {
-	machine := vm.New()
+	machine := vm.New(false)
 
 	machine.SetReg(vm.PC, 69)
 

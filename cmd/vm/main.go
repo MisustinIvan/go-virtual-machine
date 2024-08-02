@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	machine := vm.New()
+	machine := vm.New(true)
 
 	// LD8 RA 69
 	machine.Memory[0] = uint8(vm.LD8)

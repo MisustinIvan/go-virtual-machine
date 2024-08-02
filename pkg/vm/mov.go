@@ -12,8 +12,9 @@ func (o mov_op) do(v *VM) bool {
 	var r0 *register = &v.regs[v.Memory[v.pc+1]]
 	var r1 *register = &v.regs[v.Memory[v.pc+2]]
 
-	fmt.Printf("0x%x:MOV %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
-	//fmt.Printf("0x%x:MOV \033[31m%s\033[0m:0x%x \033[31m%s\033[0m:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:MOV %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	}
 	r0.val = r1.val
 
 	v.pc += uint16(o.size())
@@ -43,8 +44,9 @@ func (o lod_op) do(v *VM) bool {
 		return false
 	}
 
-	fmt.Printf("0x%x:LOD %s:0x%x 0x%x:0x%x\n", v.pc, regtostring(r0.kind), r0.val, address, val)
-	//fmt.Printf("0x%x:LOD \033[31m%s\033[0m:0x%x \033[31m0x%x\033[0m:0x%x\n", v.pc, regtostring(r0.kind), r0.val, address, val)
+	if v.print_bs {
+		fmt.Printf("0x%x:LOD %s:0x%x 0x%x:0x%x\n", v.pc, regtostring(r0.kind), r0.val, address, val)
+	}
 	r0.val = val
 
 	v.pc += uint16(o.size())
@@ -74,8 +76,9 @@ func (o ld8_op) do(v *VM) bool {
 		return false
 	}
 
-	fmt.Printf("0x%x:LD8 %s:0x%x 0x%x:0x%x\n", v.pc, regtostring(r0.kind), r0.val, address, val)
-	//fmt.Printf("0x%x:LD8 \033[31m%s\033[0m:0x%x \033[31m0x%x\033[0m:0x%x\n", v.pc, regtostring(r0.kind), r0.val, address, val)
+	if v.print_bs {
+		fmt.Printf("0x%x:LD8 %s:0x%x 0x%x:0x%x\n", v.pc, regtostring(r0.kind), r0.val, address, val)
+	}
 	r0.val = val
 
 	v.pc += uint16(o.size())
@@ -100,8 +103,9 @@ func (o str_op) do(v *VM) bool {
 
 	var r0 = v.regs[v.Memory[v.pc+3]]
 
-	fmt.Printf("0x%x:STR 0x%x:0x%x %s:0x%x\n", v.pc, address, r0.val, regtostring(r0.kind), r0.val)
-	//fmt.Printf("0x%x:STR \033[31m0x%x\033[0m:0x%x \033[31m%s\033[0m:0x%x\n", v.pc, address, r0.val, regtostring(r0.kind), r0.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:STR 0x%x:0x%x %s:0x%x\n", v.pc, address, r0.val, regtostring(r0.kind), r0.val)
+	}
 
 	ok = v.writeu16(address, r0.val)
 	if !ok {
@@ -135,8 +139,9 @@ func (o st8_op) do(v *VM) bool {
 
 	var r0 = v.regs[v.Memory[v.pc+3]]
 
-	fmt.Printf("0x%x:ST8 0x%x:0x%x %s:0x%x\n", v.pc, address, val, regtostring(r0.kind), r0.val)
-	//fmt.Printf("0x%x:STR \033[31m0x%x\033[0m:0x%x \033[31m%s\033[0m:0x%x\n", v.pc, address, val, regtostring(r0.kind), r0.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:ST8 0x%x:0x%x %s:0x%x\n", v.pc, address, val, regtostring(r0.kind), r0.val)
+	}
 
 	ok = v.writeu8(address, r0.val)
 	if !ok {

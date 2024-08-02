@@ -12,7 +12,9 @@ func (o add_op) do(v *VM) bool {
 	var r0 register = v.regs[v.Memory[v.pc+1]]
 	var r1 register = v.regs[v.Memory[v.pc+2]]
 
-	fmt.Printf("0x%x:ADD %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:ADD %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	}
 
 	v.regs[v.Memory[v.pc+1]].val = r0.val + r1.val
 
@@ -42,7 +44,9 @@ func (o sub_op) do(v *VM) bool {
 	var r0 *register = &v.regs[v.Memory[v.pc+1]]
 	var r1 *register = &v.regs[v.Memory[v.pc+2]]
 
-	fmt.Printf("0x%x:SUB %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:SUB %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	}
 	v.regs[v.Memory[v.pc+1]].val = r0.val - r1.val
 	if int(r0.val)-int(r1.val) < 0 {
 		v.regs[SP].val = uint16(OVERFLOW)
@@ -70,7 +74,9 @@ func (o mul_op) do(v *VM) bool {
 	var r0 *register = &v.regs[v.Memory[v.pc+1]]
 	var r1 *register = &v.regs[v.Memory[v.pc+2]]
 
-	fmt.Printf("0x%x:MUL %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:MUL %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	}
 
 	v.regs[v.Memory[v.pc+1]].val = r0.val * r1.val
 
@@ -100,7 +106,9 @@ func (o div_op) do(v *VM) bool {
 	var r0 *register = &v.regs[v.Memory[v.pc+1]]
 	var r1 *register = &v.regs[v.Memory[v.pc+2]]
 
-	fmt.Printf("0x%x:DIV %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:DIV %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+	}
 	if r1.val == 0 {
 		fmt.Println("division by zero")
 		v.regs[SP].val = uint16(DIVZERO)
@@ -133,7 +141,9 @@ func (o inc_op) do(v *VM) bool {
 
 	var r0 register = v.regs[v.Memory[v.pc+1]]
 
-	fmt.Printf("0x%x:INC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:INC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+	}
 
 	v.regs[v.Memory[v.pc+1]].val += 1
 
@@ -160,7 +170,9 @@ func (o dec_op) do(v *VM) bool {
 
 	var r0 register = v.regs[v.Memory[v.pc+1]]
 
-	fmt.Printf("0x%x:DEC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:DEC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+	}
 
 	v.regs[v.Memory[v.pc+1]].val -= 1
 

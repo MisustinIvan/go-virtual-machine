@@ -11,7 +11,9 @@ func (o prt_op) do(v *VM) bool {
 
 	var r0 register = v.regs[v.Memory[v.pc+1]]
 
-	fmt.Printf("0x%x:PRT %s:0x%x:%d\n", v.pc, regtostring(r0.kind), r0.val, r0.val)
+	if v.print_bs {
+		fmt.Printf("0x%x:PRT %s:0x%x:%d\n", v.pc, regtostring(r0.kind), r0.val, r0.val)
+	}
 
 	v.pc += uint16(o.size())
 	return true
