@@ -29,13 +29,13 @@
  - [x] `prt`: reg0(uint8) - print reg0
  - [x] `hlt`: halt
  - [ ] `cmp`: reg0(uint8) reg1(uint8) - compare values in reg0 and reg1, result is stored in rs
- - [ ] `jif`: addr0(uint16) - jump if overflow
- - [ ] `jid`: addr0(uint16) - jump if division by zero
- - [ ] `jiz`: addr0(uint16) - jump if zero
- - [ ] `jie`: addr0(uint16) - jump if equals
- - [ ] `jne`: addr0(uint16) - jump if not equals
- - [ ] `jig`: addr0(uint16) - jump if greater
- - [ ] `jis`: addr0(uint16) - jump if smaller
- - [ ] `jeg`: addr0(uint16) - jump if greater or equal
- - [ ] `jes`: addr0(uint16) - jump if smaller or equal
+ - [x] `jif`: addr0(uint16) - jump if overflow
+ - [x] `jid`: addr0(uint16) - jump if division by zero
+ - [x] `jiz`: addr0(uint16) - jump if zero
+ - [x] `jie`: addr0(uint16) - jump if equals
+ - [x] `jne`: addr0(uint16) - jump if not equals
+ - [x] `jig`: addr0(uint16) - jump if greater
+ - [x] `jis`: addr0(uint16) - jump if smaller
+ - [x] `jeg`: addr0(uint16) - jump if greater or equal
+ - [x] `jes`: addr0(uint16) - jump if smaller or equal
  - [ ] `xor`: reg0(uint8) reg1(uint8) - xor reg0 with reg1 to reg0
