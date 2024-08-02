@@ -13,7 +13,9 @@ const (
 	INC
 	DEC
 	LOD
+	LD8
 	STR
+	ST8
 	PRT
 	HLT
 	CMP

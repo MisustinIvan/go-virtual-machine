@@ -28,6 +28,14 @@ func New() VM {
 	}
 }
 
+func (v *VM) SetReg(r reg, val uint16) {
+	v.regs[r].val = val
+}
+
+func (v *VM) GetReg(r reg) uint16 {
+	return v.regs[r].val
+}
+
 func (v *VM) Step() bool {
 	if v.pc >= MEMSIZE-1 {
 		return false
