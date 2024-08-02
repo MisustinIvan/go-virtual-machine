@@ -11,6 +11,7 @@ var handler map[opcode]operation = map[opcode]operation{
 	LOD: lod_op{},
 	STR: str_op{},
 	HLT: hlt_op{},
+	CMP: cmp_op{},
 	NOP: nop_op{},
 	PRT: prt_op{},
 	JMP: jmp_op{},
