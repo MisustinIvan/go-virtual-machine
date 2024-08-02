@@ -26,8 +26,8 @@ func (v *VM) writeu16(address uint16, value uint16) bool {
 		return false
 	}
 
-	var lower uint8 = uint8(value >> 8)
-	var higher uint8 = uint8(value)
+	var lower uint8 = uint8(value)
+	var higher uint8 = uint8(value >> 8)
 	v.Memory[address] = lower
 	v.Memory[address+1] = higher
 	return true

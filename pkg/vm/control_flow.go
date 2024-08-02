@@ -292,6 +292,11 @@ func (o jmp_op) do(v *VM) bool {
 		return false
 	}
 
+	// cant jump to pc
+	if address == v.pc {
+		return false
+	}
+
 	fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
 
 	v.pc = address

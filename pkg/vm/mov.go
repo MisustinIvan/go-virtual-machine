@@ -93,7 +93,7 @@ func (o str_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(uint16(v.Memory[v.pc+1]))
+	address, ok := v.readu16(v.pc + 1)
 	if !ok {
 		return false
 	}

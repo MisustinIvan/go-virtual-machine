@@ -29,11 +29,19 @@ func New() VM {
 }
 
 func (v *VM) SetReg(r reg, val uint16) {
-	v.regs[r].val = val
+	if r == PC {
+		v.pc = val
+	} else {
+		v.regs[r].val = val
+	}
 }
 
 func (v *VM) GetReg(r reg) uint16 {
-	return v.regs[r].val
+	if r == PC {
+		return v.pc
+	} else {
+		return v.regs[r].val
+	}
 }
 
 func (v *VM) Step() bool {
