@@ -2,6 +2,32 @@ package vm
 
 import "fmt"
 
+type cmp_op struct{}
+
+func (o cmp_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var a = v.regs[v.Memory[v.pc+1]].val
+	var b = v.regs[v.Memory[v.pc+1]].val
+
+	if a == b {
+		v.regs[SP].val = uint16(EQUALS)
+	} else if a < b {
+		v.regs[SP].val = uint16(SMALLER)
+	} else {
+		v.regs[SP].val = uint16(GREATER)
+	}
+
+	v.pc += uint16(o.size())
+	return true
+}
+
+func (o cmp_op) size() uint8 {
+	return 3
+}
+
 type jif_op struct{}
 
 func (o jif_op) do(v *VM) bool {
@@ -126,7 +152,7 @@ func (o jne_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(NOT_EQUALS) {
+	if v.regs[SP].val == uint16(EQUALS) {
 		v.pc += uint16(o.size())
 		return true
 	}
@@ -210,7 +236,7 @@ func (o jeg_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(GREATER_OR_EQUAL) {
+	if v.regs[SP].val != uint16(GREATER) && v.regs[SP].val != uint16(EQUALS) {
 		v.pc += uint16(o.size())
 		return true
 	}
@@ -238,7 +264,7 @@ func (o jes_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(SMALLER_OR_EQUAL) {
+	if v.regs[SP].val != uint16(SMALLER) && v.regs[SP].val != uint16(EQUALS) {
 		v.pc += uint16(o.size())
 		return true
 	}

@@ -28,7 +28,7 @@
  - [x] `str`: addr0(uint16) reg0(uint8) - store value from reg0 into addr0
  - [x] `prt`: reg0(uint8) - print reg0
  - [x] `hlt`: halt
- - [ ] `cmp`: reg0(uint8) reg1(uint8) - compare values in reg0 and reg1, result is stored in rs
+ - [x] `cmp`: reg0(uint8) reg1(uint8) - compare values in reg0 and reg1, result is stored in rs
  - [x] `jif`: addr0(uint16) - jump if overflow
  - [x] `jid`: addr0(uint16) - jump if division by zero
  - [x] `jiz`: addr0(uint16) - jump if zero
