@@ -41,8 +41,8 @@ func (o sub_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 *register = &v.regs[v.Memory[v.pc+1]]
-	var r1 *register = &v.regs[v.Memory[v.pc+2]]
+	var r0 register = v.regs[v.Memory[v.pc+1]]
+	var r1 register = v.regs[v.Memory[v.pc+2]]
 
 	if v.print_bs {
 		fmt.Printf("0x%x:SUB %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
@@ -50,7 +50,7 @@ func (o sub_op) do(v *VM) bool {
 	v.regs[v.Memory[v.pc+1]].val = r0.val - r1.val
 	if int(r0.val)-int(r1.val) < 0 {
 		v.regs[SP].val = uint16(OVERFLOW)
-	} else if r0.val == 0 {
+	} else if r0.val == r1.val {
 		v.regs[SP].val = uint16(ZERO)
 	} else {
 		v.regs[SP].val = uint16(NONE)
@@ -110,11 +110,15 @@ func (o div_op) do(v *VM) bool {
 		fmt.Printf("0x%x:DIV %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	}
 	if r1.val == 0 {
-		fmt.Println("division by zero")
+		if v.print_bs {
+			fmt.Println("division by zero")
+		}
 		v.regs[SP].val = uint16(DIVZERO)
 		r0.val = 0
 	} else {
-		fmt.Println(r0.val / r1.val)
+		if v.print_bs {
+			fmt.Println(r0.val / r1.val)
+		}
 		v.regs[v.Memory[v.pc+1]].val = r0.val / r1.val
 
 		if r0.val == 0 {

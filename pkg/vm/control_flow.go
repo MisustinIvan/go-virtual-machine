@@ -10,7 +10,7 @@ func (o cmp_op) do(v *VM) bool {
 	}
 
 	var r0 = v.regs[v.Memory[v.pc+1]]
-	var r1 = v.regs[v.Memory[v.pc+1]]
+	var r1 = v.regs[v.Memory[v.pc+2]]
 
 	if r0.val == r1.val {
 		v.regs[SP].val = uint16(EQUALS)
