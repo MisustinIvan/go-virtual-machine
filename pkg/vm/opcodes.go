@@ -17,7 +17,6 @@ const (
 	PRT
 	HLT
 	CMP
-	JIO
 	JIZ
 	JIE
 	JNE
