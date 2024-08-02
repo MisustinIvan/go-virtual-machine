@@ -30,6 +30,7 @@
  - [x] `hlt`: halt
  - [ ] `cmp`: reg0(uint8) reg1(uint8) - compare values in reg0 and reg1, result is stored in rs
  - [ ] `jif`: addr0(uint16) - jump if overflow
+ - [ ] `jid`: addr0(uint16) - jump if division by zero
  - [ ] `jiz`: addr0(uint16) - jump if zero
  - [ ] `jie`: addr0(uint16) - jump if equals
  - [ ] `jne`: addr0(uint16) - jump if not equals

@@ -13,21 +13,6 @@ type VM struct {
 	regs   [NREGS]register
 }
 
-type sp_code uint16
-
-const (
-	ZERO sp_code = iota
-	ONE
-	OVERFLOW
-	DIVZERO
-	EQUALS
-	NOT_EQUALS
-	GREATER
-	SMALLER
-	GREATER_OR_EQUAL
-	SMALLER_OR_EQUAL
-)
-
 func New() VM {
 	regs := [NREGS]register{}
 
