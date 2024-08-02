@@ -16,6 +16,7 @@ var handler map[opcode]operation = map[opcode]operation{
 	CMP: cmp_op{},
 	NOP: nop_op{},
 	PRT: prt_op{},
+	PR8: pr8_op{},
 	JMP: jmp_op{},
 	JIF: jif_op{},
 	JID: jid_op{},

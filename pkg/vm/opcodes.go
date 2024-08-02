@@ -17,6 +17,7 @@ const (
 	STR
 	ST8
 	PRT
+	PR8
 	HLT
 	CMP
 	JIF
