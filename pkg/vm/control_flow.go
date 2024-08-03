@@ -9,8 +9,8 @@ func (o cmp_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 = v.regs[v.Memory[v.pc+1]]
-	var r1 = v.regs[v.Memory[v.pc+2]]
+	var r0 = v.regs[v.Memory[v.get_pc()+1]]
+	var r1 = v.regs[v.Memory[v.get_pc()+2]]
 
 	if r0.val == r1.val {
 		v.regs[SP].val = uint16(EQUALS)
@@ -21,10 +21,10 @@ func (o cmp_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:CMP %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+		fmt.Printf("0x%x:CMP %s:0x%x %s:0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -39,21 +39,21 @@ func (o jif_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(OVERFLOW) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -69,21 +69,21 @@ func (o jid_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(DIVZERO) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -99,21 +99,21 @@ func (o jiz_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(ZERO) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -129,21 +129,21 @@ func (o jie_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(EQUALS) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -159,21 +159,21 @@ func (o jne_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val == uint16(EQUALS) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -189,21 +189,21 @@ func (o jig_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(GREATER) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -219,21 +219,21 @@ func (o jis_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(SMALLER) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -249,21 +249,21 @@ func (o jeg_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(GREATER) && v.regs[SP].val != uint16(EQUALS) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -279,21 +279,21 @@ func (o jes_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	if v.regs[SP].val != uint16(SMALLER) && v.regs[SP].val != uint16(EQUALS) {
-		v.pc += uint16(o.size())
+		v.inc_pc(uint16(o.size()))
 		return true
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -309,21 +309,21 @@ func (o jmp_op) do(v *VM) bool {
 		return false
 	}
 
-	address, ok := v.readu16(v.pc + 1)
+	address, ok := v.readu16(v.get_pc() + 1)
 	if !ok {
 		return false
 	}
 
 	// cant jump to pc
-	if address == v.pc {
+	if address == v.get_pc() {
 		return false
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.pc, address)
+		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
 	}
 
-	v.pc = address
+	v.set_pc(address)
 
 	return true
 }
@@ -340,10 +340,10 @@ func (o nop_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:NOP\n", v.pc)
+		fmt.Printf("0x%x:NOP\n", v.get_pc())
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -359,10 +359,10 @@ func (o hlt_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:HLT\n", v.pc)
+		fmt.Printf("0x%x:HLT\n", v.get_pc())
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return false
 }
 
