@@ -7,5 +7,5 @@ type operation interface {
 
 func op_ok(o operation, v VM) bool {
 	// lets test -1, makes sense to me
-	return v.pc+uint16(o.size())-1 < MEMSIZE-1
+	return v.get_pc()+uint16(o.size())-1 < MEMSIZE-1
 }

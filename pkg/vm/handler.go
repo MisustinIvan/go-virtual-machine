@@ -8,6 +8,8 @@ var handler map[opcode]operation = map[opcode]operation{
 	INC: inc_op{},
 	DEC: dec_op{},
 	MOV: mov_op{},
+	PUS: pus_op{},
+	POP: pop_op{},
 	LOD: lod_op{},
 	LD8: ld8_op{},
 	STR: str_op{},

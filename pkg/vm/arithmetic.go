@@ -9,14 +9,14 @@ func (o add_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 register = v.regs[v.Memory[v.pc+1]]
-	var r1 register = v.regs[v.Memory[v.pc+2]]
+	var r0 register = v.regs[v.Memory[v.get_pc()+1]]
+	var r1 register = v.regs[v.Memory[v.get_pc()+2]]
 
 	if v.print_bs {
-		fmt.Printf("0x%x:ADD %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+		fmt.Printf("0x%x:ADD %s:0x%x %s:0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	}
 
-	v.regs[v.Memory[v.pc+1]].val = r0.val + r1.val
+	v.regs[v.Memory[v.get_pc()+1]].val = r0.val + r1.val
 
 	if int(r0.val)+int(r1.val) >= MEMSIZE {
 		v.regs[SP].val = uint16(OVERFLOW)
@@ -41,13 +41,13 @@ func (o sub_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 register = v.regs[v.Memory[v.pc+1]]
-	var r1 register = v.regs[v.Memory[v.pc+2]]
+	var r0 register = v.regs[v.Memory[v.get_pc()+1]]
+	var r1 register = v.regs[v.Memory[v.get_pc()+2]]
 
 	if v.print_bs {
-		fmt.Printf("0x%x:SUB %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+		fmt.Printf("0x%x:SUB %s:0x%x %s:0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	}
-	v.regs[v.Memory[v.pc+1]].val = r0.val - r1.val
+	v.regs[v.Memory[v.get_pc()+1]].val = r0.val - r1.val
 	if int(r0.val)-int(r1.val) < 0 {
 		v.regs[SP].val = uint16(OVERFLOW)
 	} else if r0.val == r1.val {
@@ -71,14 +71,14 @@ func (o mul_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 *register = &v.regs[v.Memory[v.pc+1]]
-	var r1 *register = &v.regs[v.Memory[v.pc+2]]
+	var r0 *register = &v.regs[v.Memory[v.get_pc()+1]]
+	var r1 *register = &v.regs[v.Memory[v.get_pc()+2]]
 
 	if v.print_bs {
-		fmt.Printf("0x%x:MUL %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+		fmt.Printf("0x%x:MUL %s:0x%x %s:0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	}
 
-	v.regs[v.Memory[v.pc+1]].val = r0.val * r1.val
+	v.regs[v.Memory[v.get_pc()+1]].val = r0.val * r1.val
 
 	if int(r0.val)*int(r1.val) >= MEMSIZE {
 		v.regs[SP].val = uint16(OVERFLOW)
@@ -103,11 +103,11 @@ func (o div_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 *register = &v.regs[v.Memory[v.pc+1]]
-	var r1 *register = &v.regs[v.Memory[v.pc+2]]
+	var r0 *register = &v.regs[v.Memory[v.get_pc()+1]]
+	var r1 *register = &v.regs[v.Memory[v.get_pc()+2]]
 
 	if v.print_bs {
-		fmt.Printf("0x%x:DIV %s:0x%x %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
+		fmt.Printf("0x%x:DIV %s:0x%x %s:0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val, regtostring(r1.kind), r1.val)
 	}
 	if r1.val == 0 {
 		if v.print_bs {
@@ -119,7 +119,7 @@ func (o div_op) do(v *VM) bool {
 		if v.print_bs {
 			fmt.Println(r0.val / r1.val)
 		}
-		v.regs[v.Memory[v.pc+1]].val = r0.val / r1.val
+		v.regs[v.Memory[v.get_pc()+1]].val = r0.val / r1.val
 
 		if r0.val == 0 {
 			v.regs[SP].val = uint16(ZERO)
@@ -143,13 +143,13 @@ func (o inc_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 register = v.regs[v.Memory[v.pc+1]]
+	var r0 register = v.regs[v.Memory[v.get_pc()+1]]
 
 	if v.print_bs {
-		fmt.Printf("0x%x:INC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+		fmt.Printf("0x%x:INC %s:0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val)
 	}
 
-	v.regs[v.Memory[v.pc+1]].val += 1
+	v.regs[v.Memory[v.get_pc()+1]].val += 1
 
 	if int(r0.val)+1 >= MEMSIZE {
 		v.regs[SP].val = uint16(OVERFLOW)
@@ -172,13 +172,13 @@ func (o dec_op) do(v *VM) bool {
 		return false
 	}
 
-	var r0 register = v.regs[v.Memory[v.pc+1]]
+	var r0 register = v.regs[v.Memory[v.get_pc()+1]]
 
 	if v.print_bs {
-		fmt.Printf("0x%x:DEC %s:0x%x\n", v.pc, regtostring(r0.kind), r0.val)
+		fmt.Printf("0x%x:DEC %s:0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val)
 	}
 
-	v.regs[v.Memory[v.pc+1]].val -= 1
+	v.regs[v.Memory[v.get_pc()+1]].val -= 1
 
 	if int(r0.val)-1 < 0 {
 		v.regs[SP].val = uint16(OVERFLOW)

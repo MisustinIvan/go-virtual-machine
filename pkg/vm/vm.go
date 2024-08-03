@@ -9,7 +9,6 @@ const MEMSIZE = 65536
 
 type VM struct {
 	Memory   [MEMSIZE]uint8
-	pc       uint16
 	regs     [NREGS]register
 	print_bs bool
 }
@@ -22,9 +21,11 @@ func New(bs bool) VM {
 		regs[i].val = 0
 	}
 
+	regs[BP].val = MEMSIZE - 2
+	regs[SP].val = MEMSIZE - 2
+
 	return VM{
 		Memory:   [MEMSIZE]uint8{},
-		pc:       0,
 		regs:     regs,
 		print_bs: bs,
 	}

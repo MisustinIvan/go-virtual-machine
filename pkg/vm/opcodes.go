@@ -9,6 +9,8 @@ const (
 	MUL
 	DIV
 	MOV
+	PUS
+	POP
 	JMP
 	INC
 	DEC
