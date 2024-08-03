@@ -17,7 +17,7 @@ func (o prt_op) do(v *VM) bool {
 
 	fmt.Println(r0.val)
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -40,7 +40,7 @@ func (o pr8_op) do(v *VM) bool {
 
 	fmt.Printf("%c", uint8(r0.val))
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 

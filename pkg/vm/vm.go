@@ -31,27 +31,31 @@ func New(bs bool) VM {
 }
 
 func (v *VM) SetReg(r reg, val uint16) {
-	if r == PC {
-		v.pc = val
-	} else {
-		v.regs[r].val = val
-	}
+	v.regs[r].val = val
 }
 
 func (v *VM) GetReg(r reg) uint16 {
-	if r == PC {
-		return v.pc
-	} else {
-		return v.regs[r].val
-	}
+	return v.regs[r].val
+}
+
+func (v *VM) inc_pc(a uint16) {
+	v.regs[PC].val += a
+}
+
+func (v *VM) set_pc(a uint16) {
+	v.regs[PC].val = a
+}
+
+func (v *VM) get_pc() uint16 {
+	return v.regs[PC].val
 }
 
 func (v *VM) Step() bool {
-	if v.pc >= MEMSIZE-1 {
+	if v.get_pc() >= MEMSIZE-1 {
 		return false
 	}
 
-	var ci opcode = opcode(v.Memory[v.pc])
+	var ci opcode = opcode(v.Memory[v.get_pc()])
 
 	handle, ok := handler[ci]
 	if ok {

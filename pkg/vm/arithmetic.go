@@ -26,7 +26,7 @@ func (o add_op) do(v *VM) bool {
 		v.regs[SP].val = uint16(NONE)
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -56,7 +56,7 @@ func (o sub_op) do(v *VM) bool {
 		v.regs[SP].val = uint16(NONE)
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -88,7 +88,7 @@ func (o mul_op) do(v *VM) bool {
 		v.regs[SP].val = uint16(NONE)
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -128,7 +128,7 @@ func (o div_op) do(v *VM) bool {
 		}
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -157,7 +157,7 @@ func (o inc_op) do(v *VM) bool {
 		v.regs[SP].val = uint16(NONE)
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
@@ -188,7 +188,7 @@ func (o dec_op) do(v *VM) bool {
 		v.regs[SP].val = uint16(NONE)
 	}
 
-	v.pc += uint16(o.size())
+	v.inc_pc(uint16(o.size()))
 	return true
 }
 
