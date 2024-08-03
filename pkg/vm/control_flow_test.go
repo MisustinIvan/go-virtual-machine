@@ -1,7 +1,7 @@
 package vm_test
 
 import (
-	"main/pkg/vm"
+	"go-virtual-machine/pkg/vm"
 	"testing"
 )
 
@@ -80,7 +80,7 @@ func TestJif(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -107,7 +107,7 @@ func TestJid(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -134,7 +134,7 @@ func TestJiz(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -160,7 +160,7 @@ func TestJie(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -186,7 +186,7 @@ func TestJne(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -212,7 +212,7 @@ func TestJig(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -238,7 +238,7 @@ func TestJis(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -264,7 +264,7 @@ func TestJeg(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }
@@ -290,7 +290,7 @@ func TestJes(t *testing.T) {
 
 	if machine.GetReg(vm.PC) != 69 {
 		t.Logf("PC: %d", machine.GetReg(vm.PC))
-		t.Logf("SP: %d", machine.GetReg(vm.SP))
+		t.Logf("RS: %d", machine.GetReg(vm.RS))
 		t.Fatal("wrong program counter")
 	}
 }

@@ -22,8 +22,8 @@
  - [x] `mul`: reg0(uint8) reg1(uint8) - multiply reg0 with reg1 to reg0
  - [x] `div`: reg0(uint8) reg1(uint8) - divide reg0 by reg1 to reg0
  - [x] `mov`: reg0(uint8) reg1(uint8) - move reg1 to reg0
- - [ ] `pus`: reg0(uint8) - push reg0
- - [ ] `pop`: reg0(uint8) - pop reg0
+ - [x] `pus`: reg0(uint8) - push reg0
+ - [x] `pop`: reg0(uint8) - pop reg0
  - [ ] `cal`: addr(uint16) - call addr
  - [ ] `ret`: - return
  - [x] `jmp`: addr0(uint16) - jump to a constant addr0

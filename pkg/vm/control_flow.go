@@ -13,11 +13,11 @@ func (o cmp_op) do(v *VM) bool {
 	var r1 = v.regs[v.Memory[v.get_pc()+2]]
 
 	if r0.val == r1.val {
-		v.regs[SP].val = uint16(EQUALS)
+		v.regs[RS].val = uint16(EQUALS)
 	} else if r0.val < r1.val {
-		v.regs[SP].val = uint16(SMALLER)
+		v.regs[RS].val = uint16(SMALLER)
 	} else {
-		v.regs[SP].val = uint16(GREATER)
+		v.regs[RS].val = uint16(GREATER)
 	}
 
 	if v.print_bs {
@@ -44,7 +44,7 @@ func (o jif_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(OVERFLOW) {
+	if v.regs[RS].val != uint16(OVERFLOW) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -74,7 +74,7 @@ func (o jid_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(DIVZERO) {
+	if v.regs[RS].val != uint16(DIVZERO) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -104,7 +104,7 @@ func (o jiz_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(ZERO) {
+	if v.regs[RS].val != uint16(ZERO) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -134,7 +134,7 @@ func (o jie_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(EQUALS) {
+	if v.regs[RS].val != uint16(EQUALS) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -164,7 +164,7 @@ func (o jne_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val == uint16(EQUALS) {
+	if v.regs[RS].val == uint16(EQUALS) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -194,7 +194,7 @@ func (o jig_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(GREATER) {
+	if v.regs[RS].val != uint16(GREATER) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -224,7 +224,7 @@ func (o jis_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(SMALLER) {
+	if v.regs[RS].val != uint16(SMALLER) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -254,7 +254,7 @@ func (o jeg_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(GREATER) && v.regs[SP].val != uint16(EQUALS) {
+	if v.regs[RS].val != uint16(GREATER) && v.regs[RS].val != uint16(EQUALS) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}
@@ -284,7 +284,7 @@ func (o jes_op) do(v *VM) bool {
 		return false
 	}
 
-	if v.regs[SP].val != uint16(SMALLER) && v.regs[SP].val != uint16(EQUALS) {
+	if v.regs[RS].val != uint16(SMALLER) && v.regs[RS].val != uint16(EQUALS) {
 		v.inc_pc(uint16(o.size()))
 		return true
 	}

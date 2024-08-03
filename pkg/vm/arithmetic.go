@@ -19,11 +19,11 @@ func (o add_op) do(v *VM) bool {
 	v.regs[v.Memory[v.get_pc()+1]].val = r0.val + r1.val
 
 	if int(r0.val)+int(r1.val) >= MEMSIZE {
-		v.regs[SP].val = uint16(OVERFLOW)
+		v.regs[RS].val = uint16(OVERFLOW)
 	} else if r0.val == 0 {
-		v.regs[SP].val = uint16(ZERO)
+		v.regs[RS].val = uint16(ZERO)
 	} else {
-		v.regs[SP].val = uint16(NONE)
+		v.regs[RS].val = uint16(NONE)
 	}
 
 	v.inc_pc(uint16(o.size()))
@@ -49,11 +49,11 @@ func (o sub_op) do(v *VM) bool {
 	}
 	v.regs[v.Memory[v.get_pc()+1]].val = r0.val - r1.val
 	if int(r0.val)-int(r1.val) < 0 {
-		v.regs[SP].val = uint16(OVERFLOW)
+		v.regs[RS].val = uint16(OVERFLOW)
 	} else if r0.val == r1.val {
-		v.regs[SP].val = uint16(ZERO)
+		v.regs[RS].val = uint16(ZERO)
 	} else {
-		v.regs[SP].val = uint16(NONE)
+		v.regs[RS].val = uint16(NONE)
 	}
 
 	v.inc_pc(uint16(o.size()))
@@ -81,11 +81,11 @@ func (o mul_op) do(v *VM) bool {
 	v.regs[v.Memory[v.get_pc()+1]].val = r0.val * r1.val
 
 	if int(r0.val)*int(r1.val) >= MEMSIZE {
-		v.regs[SP].val = uint16(OVERFLOW)
+		v.regs[RS].val = uint16(OVERFLOW)
 	} else if r0.val == 0 {
-		v.regs[SP].val = uint16(ZERO)
+		v.regs[RS].val = uint16(ZERO)
 	} else {
-		v.regs[SP].val = uint16(NONE)
+		v.regs[RS].val = uint16(NONE)
 	}
 
 	v.inc_pc(uint16(o.size()))
@@ -113,7 +113,7 @@ func (o div_op) do(v *VM) bool {
 		if v.print_bs {
 			fmt.Println("division by zero")
 		}
-		v.regs[SP].val = uint16(DIVZERO)
+		v.regs[RS].val = uint16(DIVZERO)
 		r0.val = 0
 	} else {
 		if v.print_bs {
@@ -122,9 +122,9 @@ func (o div_op) do(v *VM) bool {
 		v.regs[v.Memory[v.get_pc()+1]].val = r0.val / r1.val
 
 		if r0.val == 0 {
-			v.regs[SP].val = uint16(ZERO)
+			v.regs[RS].val = uint16(ZERO)
 		} else {
-			v.regs[SP].val = uint16(NONE)
+			v.regs[RS].val = uint16(NONE)
 		}
 	}
 
@@ -152,9 +152,9 @@ func (o inc_op) do(v *VM) bool {
 	v.regs[v.Memory[v.get_pc()+1]].val += 1
 
 	if int(r0.val)+1 >= MEMSIZE {
-		v.regs[SP].val = uint16(OVERFLOW)
+		v.regs[RS].val = uint16(OVERFLOW)
 	} else {
-		v.regs[SP].val = uint16(NONE)
+		v.regs[RS].val = uint16(NONE)
 	}
 
 	v.inc_pc(uint16(o.size()))
@@ -181,11 +181,11 @@ func (o dec_op) do(v *VM) bool {
 	v.regs[v.Memory[v.get_pc()+1]].val -= 1
 
 	if int(r0.val)-1 < 0 {
-		v.regs[SP].val = uint16(OVERFLOW)
+		v.regs[RS].val = uint16(OVERFLOW)
 	} else if int(r0.val)-1 == 0 {
-		v.regs[SP].val = uint16(ZERO)
+		v.regs[RS].val = uint16(ZERO)
 	} else {
-		v.regs[SP].val = uint16(NONE)
+		v.regs[RS].val = uint16(NONE)
 	}
 
 	v.inc_pc(uint16(o.size()))

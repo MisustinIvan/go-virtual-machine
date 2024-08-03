@@ -1,7 +1,7 @@
 package main
 
 import (
-	"main/pkg/compiler"
+	"go-virtual-machine/pkg/compiler"
 )
 
 func main() {

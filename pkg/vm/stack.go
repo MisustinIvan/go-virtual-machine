@@ -11,6 +11,13 @@ func (o pus_op) do(v *VM) bool {
 		return false
 	}
 
+	if v.regs[BP].val-v.regs[SP].val >= STACK_SIZE {
+		if v.print_bs {
+			fmt.Println("stack overflow")
+		}
+		return false
+	}
+
 	r0 := v.regs[v.Memory[v.get_pc()+1]]
 
 	if v.print_bs {
@@ -19,10 +26,11 @@ func (o pus_op) do(v *VM) bool {
 
 	ok := v.writeu16(v.GetReg(SP), r0.val)
 	if !ok {
+		fmt.Println("wtf2")
 		return false
 	}
 
-	v.SetReg(PC, v.GetReg(PC)-2)
+	v.SetReg(SP, v.GetReg(SP)-2)
 
 	v.inc_pc(uint16(o.size()))
 	return true
@@ -39,9 +47,13 @@ func (o pop_op) do(v *VM) bool {
 		return false
 	}
 
+	if v.GetReg(SP)+2 > v.GetReg(BP) {
+		return false
+	}
+
 	r0 := v.regs[v.Memory[v.get_pc()+1]]
 
-	val, ok := v.readu16(v.GetReg(SP))
+	val, ok := v.readu16(v.GetReg(SP) + 2)
 	if !ok {
 		return false
 	}
@@ -51,7 +63,7 @@ func (o pop_op) do(v *VM) bool {
 	}
 
 	v.SetReg(r0.kind, val)
-	v.SetReg(PC, v.GetReg(PC)-2)
+	v.SetReg(PC, v.GetReg(SP)+2)
 
 	v.inc_pc(uint16(o.size()))
 	return true

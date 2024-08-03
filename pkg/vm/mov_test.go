@@ -1,7 +1,7 @@
 package vm_test
 
 import (
-	"main/pkg/vm"
+	"go-virtual-machine/pkg/vm"
 	"math/rand"
 	"testing"
 )

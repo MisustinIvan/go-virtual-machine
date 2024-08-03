@@ -1,7 +1,7 @@
 package main
 
 import (
-	"main/pkg/vm"
+	"go-virtual-machine/pkg/vm"
 )
 
 func main() {

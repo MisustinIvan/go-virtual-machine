@@ -1,7 +1,7 @@
 package vm_test
 
 import (
-	"main/pkg/vm"
+	"go-virtual-machine/pkg/vm"
 	"math/rand"
 	"testing"
 )
@@ -27,7 +27,7 @@ func TestAdd(t *testing.T) {
 			t.Fatal("instruction caused halt")
 		}
 
-		if int(machine.GetReg(vm.RA)) != int(n0)+int(n1) && machine.GetReg(vm.SP) != uint16(vm.OVERFLOW) {
+		if int(machine.GetReg(vm.RA)) != int(n0)+int(n1) && machine.GetReg(vm.RS) != uint16(vm.OVERFLOW) {
 			t.Fatal("instruction returned wrong result")
 		}
 	}
@@ -57,7 +57,7 @@ func TestSub(t *testing.T) {
 		t.Logf("N0 %d\n", n0)
 		t.Logf("N1 %d\n", n1)
 
-		if int(machine.GetReg(vm.RA)) != int(n0)-int(n1) && machine.GetReg(vm.SP) != uint16(vm.OVERFLOW) {
+		if int(machine.GetReg(vm.RA)) != int(n0)-int(n1) && machine.GetReg(vm.RS) != uint16(vm.OVERFLOW) {
 			t.Fatal("instruction returned wrong result")
 		}
 	}
@@ -87,7 +87,7 @@ func TestMul(t *testing.T) {
 		t.Logf("N0 %d\n", n0)
 		t.Logf("N1 %d\n", n1)
 
-		if int(machine.GetReg(vm.RA)) != int(n0)*int(n1) && machine.GetReg(vm.SP) != uint16(vm.OVERFLOW) {
+		if int(machine.GetReg(vm.RA)) != int(n0)*int(n1) && machine.GetReg(vm.RS) != uint16(vm.OVERFLOW) {
 			t.Fatal("instruction returned wrong result")
 		}
 	}
@@ -148,7 +148,7 @@ func TestInc(t *testing.T) {
 
 		t.Logf("N0 %d\n", n0)
 
-		if int(machine.GetReg(vm.RA)) != int(n0)+1 && machine.GetReg(vm.SP) != uint16(vm.OVERFLOW) {
+		if int(machine.GetReg(vm.RA)) != int(n0)+1 && machine.GetReg(vm.RS) != uint16(vm.OVERFLOW) {
 			t.Fatal("instruction returned wrong result")
 		}
 	}
@@ -173,7 +173,7 @@ func TestDec(t *testing.T) {
 
 		t.Logf("N0 %d\n", n0)
 
-		if int(machine.GetReg(vm.RA)) != int(n0)-1 && machine.GetReg(vm.SP) != uint16(vm.OVERFLOW) {
+		if int(machine.GetReg(vm.RA)) != int(n0)-1 && machine.GetReg(vm.RS) != uint16(vm.OVERFLOW) {
 			t.Fatal("instruction returned wrong result")
 		}
 	}
