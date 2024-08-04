@@ -25,19 +25,19 @@
  - if an instruction was to generate an error(divzero, overflow), the operation is left to proceed and the program is informed via the special register. in case of division by zero, the result is zero
  - [x] `nop`: no operation
  - [x] `add`: reg0(uint8) reg1(uint8) - add reg0 and reg1 to reg0
- - [ ] `adi`: reg0(uint8) val0(uint16) - add reg0 and val0 to reg0
+ - [x] `adi`: reg0(uint8) val0(uint16) - add reg0 and val0 to reg0
  - [x] `sub`: reg0(uint8) reg1(uint8) - subtract reg1 from reg0 to reg0
- - [ ] `sbi`: reg0(uint8) val0(uint16) - subtract val0 from reg0 to reg0
+ - [x] `sbi`: reg0(uint8) val0(uint16) - subtract val0 from reg0 to reg0
  - [x] `mul`: reg0(uint8) reg1(uint8) - multiply reg0 with reg1 to reg0
- - [ ] `mli`: reg0(uint8) val0(uint16) - multiply reg0 with val0 to reg0
+ - [x] `mli`: reg0(uint8) val0(uint16) - multiply reg0 with val0 to reg0
  - [x] `div`: reg0(uint8) reg1(uint8) - divide reg0 by reg1 to reg0
- - [ ] `dvi`: reg0(uint8) val0(uint16) - divide reg0 by val0 to reg0
+ - [x] `dvi`: reg0(uint8) val0(uint16) - divide reg0 by val0 to reg0
  - [x] `mov`: reg0(uint8) reg1(uint8) - move reg1 to reg0
- - [ ] `mvi`: reg0(uint8) val0(uint16) - move val0 to reg0
+ - [x] `mvi`: reg0(uint8) val0(uint16) - move val0 to reg0
  - [x] `pus`: reg0(uint8) - push reg0
  - [x] `pop`: reg0(uint8) - pop reg0
  - [x] `jmp`: addr0(uint16) - jump to a constant addr0
- - [ ] `jpi`: reg0(uint8) - jump to an address in reg0
+ - [x] `jpi`: reg0(uint8) - jump to an address in reg0
  - [x] `inc`: reg0(uint8) - increment value in reg0
  - [x] `dec`: reg0(uint8) - decrement value in reg0
  - [x] `lod`: reg0(uint8) addr0(uint16) - load value from addr0 into reg0
@@ -57,5 +57,8 @@
  - [x] `jis`: addr0(uint16) - jump if smaller
  - [x] `jeg`: addr0(uint16) - jump if greater or equal
  - [x] `jes`: addr0(uint16) - jump if smaller or equal
+ - [ ] `and`: reg0(uint8) reg1(uint8) ands reg0 and reg1 to reg0
+ - [ ] `not`: reg0(uint8) reg1(uint8) nots reg0 and reg1 to reg0
+ - [ ] `or`:  reg0(uint8) reg1(uint8) ors reg0 and reg1 to reg0
  - [ ] `xor`: reg0(uint8) reg1(uint8) - xor reg0 with reg1 to reg0
     - do i really need xor?

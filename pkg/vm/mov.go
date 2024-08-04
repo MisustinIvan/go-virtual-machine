@@ -25,6 +25,32 @@ func (o mov_op) size() uint8 {
 	return 3
 }
 
+type mvi_op struct{}
+
+func (o mvi_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var r0 *register = &v.regs[v.Memory[v.get_pc()+1]]
+	val, ok := v.readu16(v.get_pc() + 2)
+	if !ok {
+		return false
+	}
+
+	if v.print_bs {
+		fmt.Printf("0x%x:MVI %s:0x%x 0x%x\n", v.get_pc(), regtostring(r0.kind), r0.val, val)
+	}
+	r0.val = val
+
+	v.inc_pc(uint16(o.size()))
+	return true
+}
+
+func (o mvi_op) size() uint8 {
+	return 4
+}
+
 type lod_op struct{}
 
 func (o lod_op) do(v *VM) bool {

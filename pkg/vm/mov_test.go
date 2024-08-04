@@ -26,6 +26,29 @@ func TestMov(t *testing.T) {
 	}
 }
 
+func TestMvi(t *testing.T) {
+	machine := vm.New(false)
+
+	var val uint16 = 16
+
+	machine.SetReg(vm.RA, val)
+
+	machine.Memory[0] = uint8(vm.MVI)
+	machine.Memory[1] = uint8(vm.RA)
+	machine.Memory[2] = uint8(val)
+	machine.Memory[3] = uint8(val >> 8)
+
+	if !machine.Step() {
+		t.Fatal("instruction caused halt")
+	}
+
+	if machine.GetReg(vm.RA) != val || machine.GetReg(vm.RA) != val {
+		t.Logf("VAL: 0x%x\n", val)
+		t.Logf("RA: 0x%x\n", machine.GetReg(vm.RA))
+		t.Fatal("mvi instruction failed")
+	}
+}
+
 func TestLod(t *testing.T) {
 	var address uint16
 	var number uint16

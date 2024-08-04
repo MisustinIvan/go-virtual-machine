@@ -5,13 +5,19 @@ type opcode uint8
 const (
 	NOP opcode = iota
 	ADD
+	ADI
 	SUB
+	SBI
 	MUL
+	MLI
 	DIV
+	DVI
 	MOV
+	MVI
 	PUS
 	POP
 	JMP
+	JPI
 	INC
 	DEC
 	LOD

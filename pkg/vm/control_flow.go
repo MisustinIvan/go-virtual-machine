@@ -50,7 +50,7 @@ func (o jif_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JIF 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -80,7 +80,7 @@ func (o jid_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JID 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -110,7 +110,7 @@ func (o jiz_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JIZ 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -140,7 +140,7 @@ func (o jie_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JIE 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -170,7 +170,7 @@ func (o jne_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JNE 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -200,7 +200,7 @@ func (o jig_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JIG 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -230,7 +230,7 @@ func (o jis_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JIS 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -260,7 +260,7 @@ func (o jeg_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JEG 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -290,7 +290,7 @@ func (o jes_op) do(v *VM) bool {
 	}
 
 	if v.print_bs {
-		fmt.Printf("0x%x:JMP 0x%d\n", v.get_pc(), address)
+		fmt.Printf("0x%x:JES 0x%d\n", v.get_pc(), address)
 	}
 
 	v.set_pc(address)
@@ -330,6 +330,37 @@ func (o jmp_op) do(v *VM) bool {
 
 func (o jmp_op) size() uint8 {
 	return 3
+}
+
+type jpi_op struct{}
+
+func (o jpi_op) do(v *VM) bool {
+	if !op_ok(o, *v) {
+		return false
+	}
+
+	var address uint16
+	if v.Memory[v.get_pc()+1] >= NREGS {
+		return false
+	} else {
+		address = v.regs[v.Memory[v.get_pc()+1]].val
+	}
+	// cant jump to pc
+	if address == v.get_pc() {
+		return false
+	}
+
+	if v.print_bs {
+		fmt.Printf("0x%x:JPI %s:0x%d\n", v.get_pc(), regtostring(v.regs[v.Memory[v.get_pc()+1]].kind), address)
+	}
+
+	v.set_pc(address)
+
+	return true
+}
+
+func (o jpi_op) size() uint8 {
+	return 2
 }
 
 type nop_op struct{}

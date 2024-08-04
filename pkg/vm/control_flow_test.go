@@ -25,6 +25,26 @@ func TestJmp(t *testing.T) {
 	}
 }
 
+func TestJpi(t *testing.T) {
+	machine := vm.New(false)
+
+	var val uint16 = 6942
+
+	machine.SetReg(vm.RA, val)
+
+	machine.Memory[0] = uint8(vm.JPI)
+	machine.Memory[1] = uint8(vm.RA)
+
+	if !machine.Step() {
+		t.Fatal("instruction caused halt")
+	}
+
+	if machine.GetReg(vm.PC) != val {
+		t.Log(machine.GetReg(vm.PC))
+		t.Fatal("did not jump to correct address")
+	}
+}
+
 func TestEndJmp(t *testing.T) {
 	machine := vm.New(false)
 
