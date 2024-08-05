@@ -22,6 +22,8 @@ var keywords_regs keywords = []string{
 	"RD",
 }
 
+const ENTRY string = "_start"
+
 var keywords_inst keywords = []string{
 	"CAL",
 	"RET",

@@ -63,6 +63,7 @@ func (v *VM) Step() bool {
 		return handle.do(v)
 	} else {
 		fmt.Printf("unregistered opcode %d\n", ci)
+		fmt.Printf("PC: %d", v.get_pc())
 		return false
 	}
 }

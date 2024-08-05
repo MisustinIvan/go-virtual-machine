@@ -375,7 +375,7 @@ func (o nop_op) do(v *VM) bool {
 	}
 
 	v.inc_pc(uint16(o.size()))
-	return true
+	return false
 }
 
 func (o nop_op) size() uint8 {

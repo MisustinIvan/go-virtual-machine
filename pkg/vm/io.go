@@ -15,7 +15,7 @@ func (o prt_op) do(v *VM) bool {
 		fmt.Printf("0x%x:PRT %s:0x%x:%d\n", v.get_pc(), regtostring(r0.kind), r0.val, r0.val)
 	}
 
-	//fmt.Println(r0.val)
+	fmt.Println(r0.val)
 
 	v.inc_pc(uint16(o.size()))
 	return true

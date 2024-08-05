@@ -20,6 +20,28 @@ const (
 	RS
 )
 
+func Str2Reg(a string) reg {
+	switch a {
+	case "PC":
+		return PC
+	case "BP":
+		return BP
+	case "SP":
+		return SP
+	case "RA":
+		return RA
+	case "RB":
+		return RB
+	case "RC":
+		return RC
+	case "RD":
+		return RD
+	case "RS":
+		return RS
+	}
+	return PC
+}
+
 func regtostring(r reg) string {
 	switch r {
 	case PC:

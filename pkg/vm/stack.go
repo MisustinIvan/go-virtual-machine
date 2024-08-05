@@ -63,7 +63,7 @@ func (o pop_op) do(v *VM) bool {
 	}
 
 	v.SetReg(r0.kind, val)
-	v.SetReg(PC, v.GetReg(SP)+2)
+	v.SetReg(SP, v.GetReg(SP)+2)
 
 	v.inc_pc(uint16(o.size()))
 	return true

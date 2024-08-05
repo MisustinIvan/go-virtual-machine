@@ -6,11 +6,12 @@ import (
 )
 
 func TestLexer(t *testing.T) {
-	input := "MOV RA RB :LIGMA PUS RA JMP LIGMA LOD RC 0x45"
-	expected_output := "[{INSTRUCTION MOV}{REGISTER RA}{REGISTER RB}{LABEL_DEF :LIGMA}{INSTRUCTION PUS}{REGISTER RA}{INSTRUCTION JMP}{LABEL_REF LIGMA}{INSTRUCTION LOD}{REGISTER RC}{HEX_LITERAL 0x45}]"
+	input := "_start: MOV RA RB LIGMA: PUS RA JMP LIGMA LOD RC 0x45"
+	expected_output := "[{LABEL_DEF _start}\n{INSTRUCTION MOV}{REGISTER RA}{REGISTER RB}{LABEL_DEF LIGMA}\n{INSTRUCTION PUS}{REGISTER RA}\n{INSTRUCTION JMP}{LABEL_REF LIGMA}\n{INSTRUCTION LOD}{REGISTER RC}{HEX_LITERAL 0x45}]"
 
 	res, err := lexer.Lex(input)
 	if err != nil {
+		t.Log(res)
 		t.Fatalf("Lexer failed with error: %s\n", err.Error())
 	}
 

@@ -3,7 +3,9 @@ package compiler
 import (
 	"fmt"
 	"go-virtual-machine/pkg/lexer"
+	"go-virtual-machine/pkg/parser"
 	"go-virtual-machine/pkg/preprocessor"
+	"go-virtual-machine/pkg/translator"
 	"io"
 	"os"
 	"path"
@@ -40,7 +42,29 @@ func Compile(input_name string, output_name string) error {
 		return err
 	}
 
-	fmt.Println(lexed)
+	parsed, err := parser.Parse(lexed)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(parsed)
+
+	translated, err := translator.Translate(parsed)
+	if err != nil {
+		return err
+	}
+
+	dp, err := os.Create(path.Join(cwd, output_name))
+	if err != nil {
+		return err
+	}
+
+	_, err = dp.Write(translated)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("File written to disk")
 
 	return nil
 }

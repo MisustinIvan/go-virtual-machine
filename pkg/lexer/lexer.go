@@ -13,9 +13,19 @@ type Lexer struct {
 }
 
 func New(input string) Lexer {
+	data := strings.Fields(input)
+	labels := keywords{}
+
+	for _, tk := range data {
+		if strings.HasSuffix(tk, ":") {
+			labels = append(labels, tk[:len(tk)-1])
+		}
+	}
+
 	return Lexer{
-		data:   strings.Fields(input),
+		data:   data,
 		result: []Token{},
+		labels: labels,
 		tp:     0,
 	}
 }
@@ -51,6 +61,9 @@ func isNumberHex(input string) bool {
 func ReprTokens(arg []Token) string {
 	res := "["
 	for _, tk := range arg {
+		if tk.Kind() == INSTRUCTION {
+			res += "\n"
+		}
 		res += "{"
 		res += tk.Kind().String()
 		res += " "
@@ -66,16 +79,22 @@ func ReprTokens(arg []Token) string {
 func (l *Lexer) token_kind(input string) TokenKind {
 	if keywords_inst.contains(input) {
 		return INSTRUCTION
+
 	} else if keywords_regs.contains(input) {
 		return REGISTER
-	} else if strings.HasPrefix(input, ":") {
+
+	} else if strings.HasSuffix(input, ":") {
 		return LABEL_DEF
+
 	} else if l.labels.contains(input) {
 		return LABEL_REF
+
 	} else if isNumberDec(input) {
 		return DEC_LITERAL
+
 	} else if strings.HasPrefix(input, "0x") && isNumberHex(input[2:]) {
 		return HEX_LITERAL
+
 	} else {
 		return UNKNOWN
 	}
@@ -83,33 +102,43 @@ func (l *Lexer) token_kind(input string) TokenKind {
 
 func Lex(input string) ([]Token, error) {
 	l := New(input)
+	var err error = nil
 
 	for {
 		tk, ok := l.next_token()
 		if !ok {
-			return l.result, nil
+			goto exit
 		}
 
 		switch kind := l.token_kind(tk); kind {
+
 		case UNKNOWN:
 			l.result = append(l.result, Token{
 				kind:  kind,
 				value: tk,
 			})
-			return l.result, fmt.Errorf("Unknown token detected: %s", tk)
+			err = fmt.Errorf("Unknown token detected: %s", tk)
+			goto exit
+
 		case LABEL_DEF:
-			l.labels = append(l.labels, tk[1:])
 			l.result = append(l.result, Token{
 				kind:  kind,
-				value: tk,
+				value: tk[:len(tk)-1],
 			})
-			break
+
 		default:
 			l.result = append(l.result, Token{
 				kind:  kind,
 				value: tk,
 			})
-			break
 		}
+	}
+
+exit:
+
+	if !l.labels.contains("_start") {
+		return l.result, fmt.Errorf("Entry point %s: not found", ENTRY)
+	} else {
+		return l.result, err
 	}
 }
