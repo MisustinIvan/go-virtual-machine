@@ -1,10 +1,1 @@
-MOV RA 0x45
-INC RA
-PRT RA
-STR 0xff RA
-LOD RB 0xff
-PRT RB
-INC RB
-SUB RB RA
-PRT RB
-HLT
+pkg/compiler/test.asm

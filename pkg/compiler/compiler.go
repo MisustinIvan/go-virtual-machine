@@ -2,6 +2,7 @@ package compiler
 
 import (
 	"fmt"
+	"go-virtual-machine/pkg/lexer"
 	"go-virtual-machine/pkg/preprocessor"
 	"io"
 	"os"
@@ -34,7 +35,12 @@ func Compile(input_name string, output_name string) error {
 		return err
 	}
 
-	fmt.Println(preprocessed)
+	lexed, err := lexer.Lex(preprocessed)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(lexed)
 
 	return nil
 }

@@ -1,6 +1,17 @@
-package compiler
+package lexer
 
-var keywords_regs []string = []string{
+type keywords []string
+
+func (w keywords) contains(el string) bool {
+	for _, value := range w {
+		if value == el {
+			return true
+		}
+	}
+	return false
+}
+
+var keywords_regs keywords = []string{
 	"PC",
 	"BP",
 	"SP",
@@ -11,7 +22,7 @@ var keywords_regs []string = []string{
 	"RD",
 }
 
-var keywords_inst []string = []string{
+var keywords_inst keywords = []string{
 	"CAL",
 	"RET",
 	// the two extra ones

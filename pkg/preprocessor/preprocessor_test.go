@@ -8,6 +8,7 @@ import (
 
 func TestPreprocessor(t *testing.T) {
 	var input string = "#begin LIGMA balls in your mouth #end LIGMA"
+	var expected_output string = "balls in your mouth"
 	input = strings.Join(strings.Fields(input), " ")
 
 	output, err := preprocessor.Preprocess(input)
@@ -15,6 +16,12 @@ func TestPreprocessor(t *testing.T) {
 		t.Logf("INPUT: %s\n", input)
 		t.Logf("OUTPUT: %s\n", output)
 		t.Fatalf("Preprocessor failed: %s\n", err.Error())
+	}
+
+	if output != expected_output {
+		t.Logf("OUTPUT: %s\n", output)
+		t.Logf("EXPECTED_OUTPUT: %s\n", expected_output)
+		t.Fatal("Preprocessor produced unexpected result...")
 	}
 }
 
