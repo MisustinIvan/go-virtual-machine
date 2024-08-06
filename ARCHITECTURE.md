@@ -18,9 +18,9 @@
 ### special
   - special instructions are not real in the cpu, but are made up by the assembler
   - [x] `cal`: addr(uint16) - call addr
-    - pushes all modified registers from stack frame onto the stack, including the base pointer and jumps to specified address
+    - pushes the return addres, then pushes the base pointer, sets base pointer to stack pointer and jumps to specified address
   - [x] `ret`: - return
-    - pops the base pointer and then pops all of the registers pushed previously to restore previous stack frame
+    - pops the return address, jumps and then pops base pointer
 
  - if an instruction was to generate an error(divzero, overflow), the operation is left to proceed and the program is informed via the special register. in case of division by zero, the result is zero
  - [x] `nop`: no operation
