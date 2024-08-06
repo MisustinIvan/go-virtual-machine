@@ -15,7 +15,8 @@ type Parser struct {
 
 func New(tokens []lexer.Token) (Parser, error) {
 	labels := map[string]uint16{}
-	addr := uint16(0)
+	// starting from address 3 because we prepend 3 bytes to the result to jump to section _start
+	addr := uint16(3)
 
 	for _, t := range tokens {
 		if t.Kind() == lexer.LABEL_DEF {
